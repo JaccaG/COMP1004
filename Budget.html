@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Budget Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h2 class="logo">PBT</h2>
+        <nav class="navigation">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#add-income">Add Income</a>
+            <a href="#add-expense">Add Expense</a>
+            <button class="btnDownload">Download</button>
+            <button class="btnUpload">Upload</button>
+            <input type="file" id="json-upload" accept=".json" style="display: none;">
+        </nav>
+    </header>
+
+<div class="wrapper3 dashboard active-section">
+    <div id="dashboard-section" class="dashboard-section">
+        <div class="title">
+            <h3>Dashboard</h3>
+        </div>
+        <div class="total">
+            <h4>Total amount</h4>
+            <p id="total-amount">0</p>
+        </div>
+        <div class="charts-container">
+            <div class="chart1-container">
+                <canvas id="income-chart" width="500" height="500"></canvas>
+            </div>
+            <div class="chart2-container">
+                <canvas id="expense-chart" width="500" height="500"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="wrapper2 add-income">
+        <div id="add-income-section" class="form-box add-income">
+            <div class="title2">
+                <h2>Add Income</h2>
+            </div>
+            <div class="input-box2">
+                <span class="icon2"><ion-icon name="cash-outline"></ion-icon></span>
+                <input type="number" id="income-amount" required>
+                <label for="income-amount">Amount: </label>
+            </div>
+            <div class="input-box2">
+                <span class="icon2"><ion-icon name="receipt-outline"></ion-icon></span>
+                <input type="text" id="income-from" required>
+                <label for="income-from">From: </label>
+            </div>
+            <div class="input-box2">
+                <span class="icon2"><ion-icon name="calendar-outline"></ion-icon></span>
+                <input type="date" id="income-date" required>       
+                <label for="income-date"></label>
+            </div>
+            <button type="submit" class="btn2">Add</button>
+        </div>
+    </div>
+    <div class="wrapper2 add-expense">
+        <div id="add-expense-section" class="form-box">
+            <div class="title2">
+                <h2>Add Expense</h2>
+            </div>
+            <div class="input-box2">
+                <span class="icon3"><ion-icon name="cash-outline"></ion-icon></span>
+                <input type="number" id="expense-amount" required>
+                <label for="expense-amount">Amount: </label>
+            </div>
+            <div class="input-box2">
+                <span class="icon3"><ion-icon name="receipt-outline"></ion-icon></span>
+                <input type="text" id="expense-from" required>
+                <label for="expense-from">Expense: </label>
+            </div>
+            <div class="input-box2">
+                <span class="icon3"><ion-icon name="calendar-outline"></ion-icon></span>
+                <input type="date" id="expense-date" required>
+                <label for="expense-date"></label>
+            </div>
+            <button type="submit" class="btn3">Add</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

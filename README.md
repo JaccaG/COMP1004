@@ -1,4 +1,4 @@
-# COMP1004
+# COMP1004 - SPA
 
 For this project I decided to make a Personal Budget Tracker.
 It is an application designed for users to manage their finances responsibly

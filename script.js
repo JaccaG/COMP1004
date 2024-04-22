@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize DOM elements
     const navLinks = document.querySelectorAll('.navigation a');
     const wrapper = document.querySelector('.wrapper');
-    const addIncomeSection = document.querySelector('.wrapper2.add-income')
+    const addIncomeSection = document.querySelector('.wrapper2.add-income');
     const addExpenseSection = document.querySelector('.wrapper2.add-expense');
     const dashboard = document.querySelector('.wrapper3.dashboard');
 
-
+    // Setup navigation for "Add Income" section
     navLinks[1].addEventListener('click', ()=> {
         addIncomeSection.classList.add('active-section');
         addExpenseSection.classList.remove('active-section');
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('lastActiveSection', 'addIncomeSection');
     });
 
+    // Setup navigation for "Add Expense" section
     navLinks[2].addEventListener('click', ()=> {
         addExpenseSection.classList.add('active-section');
         addIncomeSection.classList.remove('active-section');
@@ -20,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('lastActiveSection', 'addExpenseSection');
     });
 
+    // Setup navigation for "Dashboard" section, reload page and update data
     navLinks[0].addEventListener('click', ()=> {
         location.reload();
         dashboard.classList.add('active-section');
@@ -30,10 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
         createCharts();
     });
 
-    function updateTotalAmount() { 
+    // Function to update the total amount of income and expense
+    function updateTotalAmount() {
         let data = localStorage.getItem('financeData');
         let financeData = data ? JSON.parse(data) : [];
-
         let totalIncome = 0;
         let totalExpense = 0;
 
@@ -46,11 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         let totalAmount = totalIncome - totalExpense;
-
         document.getElementById('total-amount').textContent = totalAmount;
         createCharts();
     }
 
+    // Listener for adding new income data
     document.querySelector('.btn2').addEventListener('click', function() {
         let income = document.getElementById('income-amount').value;
         let source = document.getElementById('income-from').value;
@@ -72,9 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('income-from').value = '';
         document.getElementById('income-date').value = '';
         updateTotalAmount();
-        createCharts();  // create or update the charts
+        createCharts();
     });
 
+    // Listener for adding new expense data
     document.querySelector('.btn3').addEventListener('click', function() {
         let expense = document.getElementById('expense-amount').value;
         let source = document.getElementById('expense-from').value;
@@ -98,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTotalAmount();
     });
 
+    // Download button listener to export finance data
     document.querySelector('.btnDownload').addEventListener('click', function() {
         let data = localStorage.getItem('financeData');
         if (!data) {
@@ -118,10 +123,12 @@ document.addEventListener('DOMContentLoaded', () => {
         link.click();
     });
 
+    // Upload button listener to import finance data
     document.querySelector('.btnUpload').addEventListener('click', function() {
         document.getElementById('json-upload').click();
     });
 
+    // Listener to handle file uploads and update data accordingly
     document.getElementById('json-upload').addEventListener('change', function(e) {
         let file = e.target.files[0];
 
@@ -134,17 +141,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 localStorage.setItem('financeData', JSON.stringify(data));
                 updateTotalAmount();
-                createCharts();  // create or update the charts
+                createCharts();
             };
 
             reader.readAsText(file);
         }
     });
 
+    // Initial loading of data on window load, update balance and charts
     window.onload = function() {
         let data = localStorage.getItem('financeData');
         let financeData = data ? JSON.parse(data) : [];
-
         let totalIncome = 0;
         let totalExpense = 0;
 
@@ -157,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         let balance = totalIncome - totalExpense;
-
         document.getElementById('total-amount').textContent = balance;
 
         let lastActiveSection = localStorage.getItem('lastActiveSection');
@@ -165,13 +171,13 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.' + lastActiveSection).classList.add('active-section');
         }
 
-        createCharts();  // create or update the charts
+        createCharts();
     };
 
+    // Function to create income and expense charts
     function createCharts() {
         let data = localStorage.getItem('financeData');
         let financeData = data ? JSON.parse(data) : [];
-
         let totalIncome = 0;
         let totalExpense = 0;
 
@@ -217,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 backgroundColor: generateColors(Object.keys(expenseSources).length)
             }]
         };
-
+        // create income chart
         const incomeChartCtx = document.getElementById('income-chart').getContext('2d');
         new Chart(incomeChartCtx, {
             type: 'doughnut',
@@ -249,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-
+        // create expense chart
         const expenseChartCtx = document.getElementById('expense-chart').getContext('2d');
         new Chart(expenseChartCtx, {
             type: 'doughnut',
@@ -283,6 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Function to generate a list of random colors for charts
     function generateColors(count) {
         const colors = [];
         for (let i = 0; i < count; i++) {
@@ -291,6 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return colors;
     }
 
+    // Function to generate a random color
     function getRandomColor() {
         const letters = '0123456789ABCDEF';
         let color = '#';
